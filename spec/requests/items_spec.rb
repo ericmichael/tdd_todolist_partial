@@ -1,29 +1,29 @@
 require "rails_helper"
 
 # When signed in:
-# should be able to view my own items
+# [x] - should be able to view my own items 
 
 # -- new items
-# should be able to view form to make a new item
-# should be able to create an item, given some form data
+# [x] - should be able to view form to make a new item
+# [x] - should be able to create an item, given some form data
 
 # -- edit items
-# should be able to view form to edit an item that belongs to me
-# should NOT be able to view form to edit an item that does not belong to me
-# should be able to edit an item, given some form data, that belongs to me
-# should NOTE be able to edit an item, given some form data, that does not belong to me
+# [ ] - should be able to view form to edit an item that belongs to me
+# [x] - should NOT be able to view form to edit an item that does not belong to me
+# [ ] - should be able to edit an item, given some form data, that belongs to me
+# [x] - should NOTE be able to edit an item, given some form data, that does not belong to me
 
 # -- delete item
-# should be able to delete an item that belongs to me
-# should not be able to delete an item that does not belong to me
+# [ ] - should be able to delete an item that belongs to me
+# [x] - should not be able to delete an item that does not belong to me
 
 # When not signed in:
-# should not be able to view to do list items
-# should not be able to view form to make an item
-# should not be able to create an item, given valid form data
-# should not be able to view form to edit an item
-# should not be able to edit an item, given valid form data
-# should not be able to delete an item
+# [x] - should not be able to view to do list items
+# [x] - should not be able to view form to make an item
+# [x] - should not be able to create an item, given valid form data
+# [x] - should not be able to view form to edit an item
+# [x] - should not be able to edit an item, given valid form data
+# [x] - should not be able to delete an item
 
 RSpec.describe "Items", type: :request do
 
@@ -67,9 +67,8 @@ RSpec.describe "Items", type: :request do
             expect(response).to redirect_to(root_path)
         end
 
-        it "should not delete /items/:id" do
+        it "should not delete /items/:id if it does not belong to me" do
             hacker_user = User.create(email: "hacker@hacker.com", password: "hacker123")
-
 
             sign_in hacker_user
             expect {
@@ -77,7 +76,6 @@ RSpec.describe "Items", type: :request do
             }.not_to change(Item, count)
 
             expect(response).to redirect_to(root_path)
-
         end
     end
 
